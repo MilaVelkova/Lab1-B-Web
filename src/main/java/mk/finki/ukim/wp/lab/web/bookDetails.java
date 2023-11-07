@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import mk.finki.ukim.wp.lab.service.AuthorService;
+import mk.finki.ukim.wp.lab.service.BookService;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.web.IWebExchange;
@@ -19,7 +20,7 @@ import java.io.IOException;
 public class bookDetails extends HttpServlet {
 
     private final SpringTemplateEngine springTemplateEngine;
-    private final AuthorService authorService;
+    private final BookService bookService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,6 +28,8 @@ public class bookDetails extends HttpServlet {
                 .buildApplication(getServletContext())
                 .buildExchange(req, resp);
         WebContext context =  new WebContext(webExchange);
+        String isbn = req.getQueryString();
+        context.setVariable("details", bookService.findBookByIsbn(isbn));
         springTemplateEngine.process(
                 "bookDetails.html",
                 context,
@@ -36,6 +39,6 @@ public class bookDetails extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+//        super.doPost(req, resp);
     }
 }

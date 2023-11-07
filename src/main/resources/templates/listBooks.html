@@ -17,7 +17,7 @@
     <h2>Choose book:</h2>
     <form th:method="POST" th:action="@{/listBooks}">
         <th:block th:each="book : ${books}">
-            <input type="radio" name="authorId" value="${book.getIsbn()}" th:text="${book.getTitle()}">  </br>
+            <input type="radio" name="bookIsbn" th:value="${book.getIsbn()}" th:text="${book.getTitle()}">  </br>
         </th:block>
         <input type='submit' th:value='Submit'>
     </form>

@@ -1,18 +1,17 @@
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
 </head>
 <body>
 <header>
-   <h1>Book title</h1>
+   <h1 th:text="${details.getTitle()}"></h1>
 </header>
 <section>
-    <h2>Genre</h2>
-    <h2>Year</h2>
+    <h2 th:text="${details.getGenre()}"></h2>
+    <h2 th:text="${details.getYear()}"></h2>
     <h2>Authors:</h2>
-    <ul>
-        <li>Петар Петров</li>
-        <li>Јован Јованов</li>
+    <ul th:each="author : ${details.getAuthors()}">
+        <li th:text="${author.getName() + ' ' + author.getSurname()}"></li>
     </ul>
 </section>
 
