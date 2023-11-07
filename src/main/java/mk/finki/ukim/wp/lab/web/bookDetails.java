@@ -14,6 +14,7 @@ import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet (urlPatterns = "/bookDetails")
 @AllArgsConstructor
@@ -39,6 +40,12 @@ public class bookDetails extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        super.doPost(req, resp);
+        IWebExchange webExchange = JakartaServletWebApplication
+                .buildApplication(getServletContext())
+                .buildExchange(req, resp);
+        WebContext context =  new WebContext(webExchange);
+        String isbn = req.getParameter("isbn");
+        bookService.findBookByIsbn(isbn).setAuthors(new ArrayList<>());
+        resp.sendRedirect("/bookDetails?" + isbn);
     }
 }

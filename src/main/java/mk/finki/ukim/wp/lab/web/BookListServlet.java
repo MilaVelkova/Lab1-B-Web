@@ -43,6 +43,5 @@ public class BookListServlet extends HttpServlet {
         WebContext context =  new WebContext(webExchange);
         String isbn = req.getParameter("bookIsbn");
         resp.sendRedirect("/author?" + isbn);
-
     }
 }
