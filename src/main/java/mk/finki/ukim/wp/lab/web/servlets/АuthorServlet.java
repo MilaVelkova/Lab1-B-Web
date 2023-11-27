@@ -1,4 +1,4 @@
-package mk.finki.ukim.wp.lab.web;
+package mk.finki.ukim.wp.lab.web.servlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -6,8 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import mk.finki.ukim.wp.lab.service.AuthorService;
-import mk.finki.ukim.wp.lab.service.BookService;
+import mk.finki.ukim.wp.lab.service.Interface.AuthorService;
+import mk.finki.ukim.wp.lab.service.implementation.BookService;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.web.IWebExchange;

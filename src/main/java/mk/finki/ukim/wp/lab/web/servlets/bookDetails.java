@@ -1,4 +1,4 @@
-package mk.finki.ukim.wp.lab.web;
+package mk.finki.ukim.wp.lab.web.servlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -6,17 +6,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import mk.finki.ukim.wp.lab.service.BookService;
+import mk.finki.ukim.wp.lab.service.implementation.BookService;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
-@WebServlet(urlPatterns = "/listBooks", name = "listBooks")
+@WebServlet (urlPatterns = "/bookDetails")
 @AllArgsConstructor
-public class BookListServlet extends HttpServlet {
+public class bookDetails extends HttpServlet {
+
     private final SpringTemplateEngine springTemplateEngine;
     private final BookService bookService;
 
@@ -26,13 +28,13 @@ public class BookListServlet extends HttpServlet {
                 .buildApplication(getServletContext())
                 .buildExchange(req, resp);
         WebContext context =  new WebContext(webExchange);
-        context.setVariable("books", bookService.listBooks());
+        String isbn = req.getQueryString();
+        context.setVariable("details", bookService.findBookByIsbn(isbn));
         springTemplateEngine.process(
-                "listBooks.html",
+                "bookDetails.html",
                 context,
                 resp.getWriter()
         );
-
     }
 
     @Override
@@ -41,7 +43,8 @@ public class BookListServlet extends HttpServlet {
                 .buildApplication(getServletContext())
                 .buildExchange(req, resp);
         WebContext context =  new WebContext(webExchange);
-        String isbn = req.getParameter("bookIsbn");
-        resp.sendRedirect("/author?" + isbn);
+        String isbn = req.getParameter("isbn");
+        bookService.findBookByIsbn(isbn).setAuthors(new ArrayList<>());
+        resp.sendRedirect("/bookDetails?" + isbn);
     }
 }

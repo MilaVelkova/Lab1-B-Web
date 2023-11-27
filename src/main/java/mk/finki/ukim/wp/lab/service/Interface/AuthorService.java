@@ -1,4 +1,4 @@
-package mk.finki.ukim.wp.lab.service;
+package mk.finki.ukim.wp.lab.service.Interface;
 
 import mk.finki.ukim.wp.lab.model.Author;
 
