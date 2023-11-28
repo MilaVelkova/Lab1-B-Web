@@ -29,7 +29,12 @@ public class BookService implements mk.finki.ukim.wp.lab.service.Interface.BookS
         Book book = bookRepository.findByIsbn(isbn);
         return bookRepository.addAuthorToBook(author, book);
     }
-
+    @Override
+    public Author addAuthorToBook(Long authorId, long id) {
+        Author author = authorRepository.findById(authorId);
+        Book book = bookRepository.findById(id).get();
+        return bookRepository.addAuthorToBook(author, book);
+    }
     @Override
     public Book findBookByIsbn(String isbn) {
         return bookRepository.findByIsbn(isbn);

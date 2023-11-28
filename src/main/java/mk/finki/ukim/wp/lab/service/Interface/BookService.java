@@ -9,6 +9,9 @@ import java.util.Optional;
 public interface BookService {
     List<Book> listBooks();
     Author addAuthorToBook(Long authorId, String isbn);
+
+    Author addAuthorToBook(Long authorId, long id);
+
     Book findBookByIsbn(String isbn);
 
     void save(String title, String isbn, String genre, int year, int IdBookStore);

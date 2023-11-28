@@ -56,7 +56,7 @@ public class BookController {
         return "redirect:/books";
     }
 
-    @PostMapping("/books/delete/{id}")
+    @GetMapping("/books/delete/{id}")
     public String deleteBook(@PathVariable Long id){
         this.bookService.delete(id);
         return "redirect:/books";
@@ -72,8 +72,11 @@ public class BookController {
             model.addAttribute("bodyContent", "addBook");
             return "master-template";
         }
-        //TODO: IMPLEMENTS ERROR
-        return "redirect:/books";
+            model.addAttribute("books", bookService.listBooks());
+            model.addAttribute("hasError", true);
+        model.addAttribute("error", "Invalid id exception");
+            model.addAttribute("bodyContent", "listBooks");
+            return "master-template";
     }
 
     @GetMapping("/books/add-form")

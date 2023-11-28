@@ -39,7 +39,7 @@
             <div class="col-12" th:if="${books.size() > 0}">
                 <div class="table-responsive">
 
-                    <form th:method="POST" th:action="@{/listBooks}">
+                    <form th:method="POST" th:action="@{/authorCon}">
 
                     <table class="table table-striped">
                         <thead>
@@ -53,20 +53,30 @@
                         </thead>
                         <tbody>
                         <tr th:each="book : ${books}" class="product">
-                            <td><input type="radio" name="bookIsbn" th:value="${book.getIsbn()}"></td>
+
+                            <td><input type="radio" name="bookIsbn" th:value="${book.getIsbn()}">
+                                <input id="id" type="hidden" name="id"
+                                       th:value="(${book.getId()})">
+                            </td>
+
+
                             <td th:text="${book.getTitle()}"></td>
                             <td th:text="${book.getGenre()}"></td>
                             <td th:text="${book.getIsbn()}"></td>
                             <td th:text="${book.getYear()}"></td>
                             <td class="text-right">
                                 <th:block>
-                                    <form th:action="@{'/books/delete/{id}' (id=${book.getId()})}"
-                                          th:method="DELETE">
-                                        <button type="submit"
-                                                class="btn btn-sm btn-danger delete-product">
-                                            <i class="fa fa-trash">Delete</i>
-                                        </button>
-                                    </form>
+<!--                                    <form th:action="@{'/books/delete/{id}' (id=${book.getId()})}"-->
+<!--                                          th:method="DELETE">-->
+<!--                                        <button type="submit"-->
+<!--                                                class="btn btn-sm btn-danger delete-product">-->
+<!--                                            <i class="fa fa-trash">Delete</i>-->
+<!--                                        </button>-->
+<!--                                    </form>-->
+                                    <a th:href="@{'/books/delete/{id}' (id=${book.getId()})}"
+                                       class="btn btn-sm btn-danger delete-product">
+                                        <i class="fa fa-trash">Delete</i>
+                                    </a>
                                 </th:block>
                                 <th:block>
                                     <a th:href="@{'/books/edit-form/{id}' (id=${book.getId()})}"
@@ -93,6 +103,9 @@
                         </a>
                     </div>
                 </div>
+                <th:block th:if="${hasError}">
+                    <div th:text="${error}" class="text-danger"></div>
+                </th:block>
             </div>
         </div>
     </div>
